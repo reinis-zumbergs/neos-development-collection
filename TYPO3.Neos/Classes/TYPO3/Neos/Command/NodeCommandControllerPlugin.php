@@ -125,15 +125,15 @@ class NodeCommandControllerPlugin implements NodeCommandControllerPluginInterfac
      */
     public function generateUriPathSegments($workspaceName, $dryRun)
     {
-        $baseContext = $this->createContext($workspaceName, []);
+        $baseContext = $this->createContext($workspaceName, array());
         $baseContextSiteNodes = $baseContext->getNode('/sites')->getChildNodes();
-        if ($baseContextSiteNodes === []) {
+        if ($baseContextSiteNodes === array()) {
             return;
         }
 
         foreach ($this->dimensionCombinator->getAllAllowedCombinations() as $dimensionCombination) {
             $flowQuery = new FlowQuery($baseContextSiteNodes);
-            $siteNodes = $flowQuery->context(['dimensions' => $dimensionCombination, 'targetDimensions' => []])->get();
+            $siteNodes = $flowQuery->context(array('dimensions' => $dimensionCombination, 'targetDimensions' => array()))->get();
             if (count($siteNodes) > 0) {
                 $this->output->outputLine('Checking for nodes with missing URI path segment in dimension "%s"', array(trim(NodePaths::generateContextPath('', '', $dimensionCombination), '@;')));
                 foreach ($siteNodes as $siteNode) {
